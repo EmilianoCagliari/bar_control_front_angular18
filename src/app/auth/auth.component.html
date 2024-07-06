@@ -3,7 +3,7 @@
     <div class="w-full max-w-6xl flex justify-center items-center">
 
         <div class="relative 
-        w-5/6 h-[70%] min-h-[500px] min-w-80
+        w-5/6 h-4/5 min-h-[500px] md:min-h-[600px] min-w-80
 
         rounded-2xl flex border-2 border-prim-dark-1">
 
@@ -13,36 +13,38 @@
                 <div class=" h-full flex flex-col items-center">
 
                     <!-- Upper Login sector -->
-                    <div class="w-full h-2/3 flex flex-col p-4">
-                        <div class="size-36 self-center">
+                    <div class="w-full flex flex-col p-4 gap-2">
+                        <div class="size-24 md:size-28 lg:size-36 self-center">
                             <img src="images/logo-blue.svg" alt="BarControl Logo">
                         </div>
-                        <div class="h-36 flex flex-col justify-evenly items-center flex-1">
-                            <h1>Bienvenido a <span class="font-bold">Bar Control</span> .</h1>
-
-                            <p class="mb-2"> El sistema de inventariado y control de costos de bebidas basado en peso.
+                        <div class="flex flex-col justify-evenly items-center gap-2 flex-1 text-sm md:text-base ">
+                            <h1 class="text-lg">Bienvenido a <span class="font-bold">Bar Control</span> .</h1>
+                            <p> El sistema de inventariado y control de costos de bebidas basado en
+                                peso.
                             </p>
-                            <p class="px-1">Por favor <span class="font-bold">inicia sesión</span> para operar con el
+                            <p>Por favor <span class="font-bold">inicia sesión</span> para operar con
+                                el
                                 sistema.</p>
 
                         </div>
                     </div>
                     <!-- Bottom Login sector -->
 
-                    <div class="w-2/3 h-1/2 flex justify-center  pb-4 flex-1">
+                    <div class="w-4/5 flex justify-center pb-4 flex-1">
 
-                        <form class="w-full flex flex-col" autocomplete="disabled">
+                        <form class="w-full flex flex-col gap-4 justify-end" autocomplete="disabled" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-                            <div class="h-3/5 flex flex-col justify-evenly">
+                            <div class="flex flex-col justify-evenly">
                                 <div class="relative z-0 mb-3">
                                     <input type="text" id="email" formControlName="email" autocomplete="new-email"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" " />
+                                        [ngClass]="{ 'border-b-danger': isEmailNotValid }" placeholder=" " />
                                     <label for="email"
-                                        class="absolute text-sm border-b-prim-dark-1 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+                                        class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        [ngClass]="{ 'text-danger': isEmailNotValid }">Email</label>
 
                                     @if (isEmailNotValid) {
-                                    <span class="absolute text-sm font-bold text-danger">
+                                    <span class="absolute text-xs font-bold text-danger">
                                         <!-- Muestra un mensaje de error o un tooltip aquí -->
                                         Debe ingresar un correo valido
                                     </span>
@@ -53,13 +55,14 @@
                                     <input type="password" id="password" formControlName="password"
                                         autocomplete="new-password"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" " />
+                                        [ngClass]="{ 'border-b-danger': isPasswordNotValid }" placeholder=" " />
                                     <label for="password"
-                                        class="absolute text-sm border-b-primary-900 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                                        class="absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        [ngClass]="{ 'text-danger': isPasswordNotValid }">Password</label>
 
                                     @if (isPasswordNotValid) {
 
-                                    <span class=" absolute text-sm font-bold text-danger">
+                                    <span class=" absolute text-xs font-bold text-danger">
                                         <!-- Muestra un mensaje de error o un tooltip aquí -->
                                         La contraseña debe tener 6 caracteres minimos.
                                     </span>
@@ -73,7 +76,11 @@
 
                         </form>
 
+
                     </div>
+
+                    <app-alert class="relative bottom-0 w-full  mx-2"
+                        [ngClass]="{'visible': errorLogin, 'invisible': !errorLogin}"></app-alert>
 
                 </div>
 
@@ -86,11 +93,11 @@
                 <app-carousel class="w-full h-full"></app-carousel>
 
             </div>
-            <!-- <app-alert *ngIf="errorLogin" class="absolute bottom-0 w-2/5"></app-alert> -->
+
+
 
         </div>
 
     </div>
-
-    <!-- <app-loader *ngIf="isLogin" msg="Iniciando sesion..."></app-loader> -->
+    <app-loader *ngIf="isLoginIn" msg="Iniciando sesion..."></app-loader>
 </div>

@@ -40,6 +40,7 @@ module.exports = {
           '950': '#092a0a',
         },
         "transparent": "transparent",
+        'danger': '#D30E0E'
       }
     },
   },

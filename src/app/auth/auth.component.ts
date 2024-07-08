@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../components/button/button.component';
 import { CarouselComponent } from '../components/carousel/carousel.component';
 import { AlertComponent } from '../components/alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoaderComponent } from '../components/loader/loader.component';
+import { AuthService } from '../services/auth/auth.service';
+import { LocalstorageService } from '../services/storage/localstorage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -22,18 +25,22 @@ import { LoaderComponent } from '../components/loader/loader.component';
 })
 export class AuthComponent {
 
-
   //Formulario de login
   loginForm: FormGroup;
 
   isPasswordNotValid: boolean = false;
   isEmailNotValid: boolean = false;
 
-  errorLogin: boolean = false;
   isLoginIn: boolean = false;
 
+  //Alert de error
+  @ViewChild('alert') alert!: AlertComponent;
+  errorLogin: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private localstorage: LocalstorageService,
+    private router: Router
   ) {
 
     this.loginForm = this.formBuilder.group({
@@ -41,11 +48,20 @@ export class AuthComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
+    this.authService.test()
+      .subscribe({
+        next: response => {
+          console.log('Respuesta:', response);
+        },
+        error: error => {
+          console.log('Error:', error.error.error);
+        }
+      });
+
   }
 
-  async onSubmit() {    
-    
-    this.isLoginIn = true;
+  async onSubmit() {
+
     this.isEmailNotValid = !this.loginForm.get('email')?.valid;
     this.isPasswordNotValid = !this.loginForm.get('password')?.valid;
 
@@ -53,50 +69,52 @@ export class AuthComponent {
     setTimeout(() => {
       this.isEmailNotValid = false;
       this.isPasswordNotValid = false;
-      this.isLoginIn = false;
     }, 2000);
 
-    // if (this.loginForm.valid) {
+    if (this.loginForm.valid) {
 
-    //   this.isLogin = true;
+      this.isLoginIn = true;
+
+      const email = this.loginForm.get('email')!.value;
+      const password = this.loginForm.get('password')!.value;
+
+      this.authService.login(email, password)
+        .subscribe({
+          next: (response: any) => {
+            // Manejar la respuesta de la solicitud HTTP
+            console.log('Respuesta:', response);
+            this.isLoginIn = false;
+
+            let data:Map<string, string> = new Map<string, string>();
+            data.set('token', response['token']);
+            data.set('expiresIn', response['expiresIn']);
+
+            let jsonData = JSON.stringify(Object.fromEntries(data));
 
 
-    //   const email = this.loginForm.get('email')!.value;
-    //   const password = this.loginForm.get('password')!.value;
+            this.localstorage.setItem("barcontrol", jsonData);     
 
-    //   // console.log('loginForm', this.loginForm.value);
+            this.router.navigate(['/main/home'], { replaceUrl: true });
 
-    //   this.authService.login(this.loginForm.value)
-    //     .subscribe({
-    //       next: response => {
-    //         // Manejar la respuesta de la solicitud HTTP
+          },
+          error: (err) => {
 
-    //         this.isLogin = true;
-    //         console.log('Respuesta:', response);
-    //         setTimeout(() => {
-    //           this.isLogin = false;
+            this.isLoginIn = false;
 
-    //           this.localstorage.setItem("token", response['access_token']);
-    //           console.log("LoggedIn", this.authService.isLoggedIn());
-    //           this.userService.email = email;
+            this.alert.msg = err.error.description;
+            this.errorLogin = true;
 
-    //           this.router.navigate(['home/inicio']);
-    //         }, 2000);
 
-    //       },
-    //       error: (err) => {
+            setTimeout(() => {
+              this.errorLogin = false;
+            }, 2000);
 
-    //         setTimeout(async () => {
-    //           this.isLogin = false;
-    //           await this.Toast.fire({
-    //             icon: 'error',
-    //             title: `${err.error.message}`
-    //           })
-    //         }, 2000);
+          }
+        });
 
-    //       }
-    //     });
-    // }
+
+
+    }
 
 
   }

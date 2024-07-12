@@ -17,3 +17,22 @@
     }
 
 }
+
+@layer utilities {
+    .custom-scroll::-webkit-scrollbar {
+        @apply size-2 ;
+    }
+  
+    .custom-scroll::-webkit-scrollbar-track {
+        @apply rounded-r-md bg-primary-100 dark:bg-primary-500/25;
+    }
+  
+    .custom-scroll::-webkit-scrollbar-thumb {
+        @apply rounded-r-md bg-primary-300 dark:bg-primary-400;
+    }
+  
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary-600;
+    }
+    
+  }

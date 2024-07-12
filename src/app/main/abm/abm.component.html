@@ -1,0 +1,7 @@
+<!-- <app-table></app-table> -->
+ <div class="w-full h-full grid grid-cols-3 gap-2">
+
+    @for (item of items; track $index) {
+        <div [ngClass]="{'bg-secondary-950': $index % 2 == 0, 'bg-secondary-800': $index % 2 == 1}"> {{$index}} </div>
+    }
+ </div>

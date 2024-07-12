@@ -1,15 +1,16 @@
-<div class="w-full h-full flex flex-col justify-between" >
+<div class="w-full h-full flex flex-col justify-between">
     <!-- *ngIf="!loading && products.length > 0" -->
     <div class="w-full
+                flex-1
                 border
-                border-prim-light-2
-                rounded-xl
-                max-h-[500px]
-                3xl:max-h-[600px]
-                overflow-y-auto">
+                border-primary-200
+                rounded-md
+                max-h-[calc(100vh-200px)]
+                overflow-y-scroll
+                custom-scroll">
         <table class="table-auto w-full">
             <thead>
-                <tr class="bg-prim-light-1/25">
+                <tr class="bg-primary-500/25">
                     <th class="py-2
                     text-xs
                     lg:text-base">Nombre</th>
@@ -47,60 +48,60 @@
             </thead>
             <tbody>
 
-                <tr *ngFor="let d of products; let i = index;" class="border-b border-b-[#574FB4]/25 text-center">
-                    <td class="py-2 text-start text-xs lg:text-base">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.name'
+                <tr *ngFor="let d of products; let i = index;" class="border-b border-b-primary-900/25 text-center">
+                    <td class="py-2 text-xs lg:text-base">
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.name'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit">{{d.name}}</span>
                     </td>
                     <td class="py-2 text-xs lg:text-base ">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="number" [value]='d.price'
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="number" [value]='d.price'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit"> {{d.price}}</span>
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="number" [value]='d.quantity'
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="number" [value]='d.quantity'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit"> {{d.quantity}}</span>
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <!-- <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.brand_id'
+                        <!-- <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.brand_id'
                                 *ngIf="i === rowEdit" > -->
                         <!-- <span> {{d.brand_id | brandPipe}}</span> -->
                         <!-- <span *ngIf="i !== rowEdit"> {{d.brand_id | brandPipe}}</span> -->
                     </td>
                     <td class="py-2 text-xs lg:text-base ">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.type'
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.type'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit"> {{d.type}}</span>
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.initialWeight'
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.initialWeight'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit">
                             <!-- {{d.initialWeight| number: '4.1-2' }}  -->
                             <b class="hidden md:inline">g</b></span>
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.fullWeight'
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.fullWeight'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit">
                             <!-- {{d.fullWeight| number: '4.1-2' }}  -->
                             <b class="hidden md:inline">g</b></span>
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.barcode'
+                        <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.barcode'
                             *ngIf="i === rowEdit">
                         <span *ngIf="i !== rowEdit"> {{d.barcode}}</span>
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <!-- <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.createdAt'
+                        <!-- <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.createdAt'
                                 *ngIf="i === rowEdit"> -->
                         <!-- <span> {{d.createdAt | date: "dd/MM/yyyy"}}</span> -->
                         <!-- <span *ngIf="i !== rowEdit"> {{d.createdAt | date:"short"}}</span> -->
                     </td>
                     <td class="py-2 text-xs lg:text-base">
-                        <!-- <input class="w-full py-1 text-center bg-primary-100/25" type="text" [value]='d.updatedAt'
+                        <!-- <input class="w-full py-1 text-center bg-primary-700/25" type="text" [value]='d.updatedAt'
                             *ngIf="i === rowEdit">
                             <span *ngIf="i !== rowEdit"> {{d.updatedAt | date:"shortDate"}}</span> -->
                         <!-- <span> {{d.updatedAt | date: "dd/MM/yyyy"}}</span> -->
@@ -114,19 +115,17 @@
 
                     <!-- <th class="py-2">Artist</th>
                     <th class="py-2">Year</th>-->
-                    <td class="py-2 flex justify-center items-center">
+                    <td class="py-2 flex  items-center justify-center text-primary-100 gap-2">
                         <!-- (click)="editRow(i)" *ngIf="i !== rowEdit"  -->
-                        <button 
-                        class="w-7 h-7 
-                                lg:w-9 lg:h-9 
-                                mx-2 rounded-full bg-prim-light flex justify-center items-center
+                        <button class="size-6 
+                                lg:size-8  rounded-full bg-primary-700 flex justify-center items-center
                                 transition ease-in-out delaxy-75 
-                                hover:shadow-md hover:shadow-prim-dark-1/70 hover:-translate-y-0.5"
+                                hover:shadow-md hover:shadow-primary-900/70 hover:-translate-y-0.5"
                             aria-label="edit-item">
 
-                            <svg class="text-primary-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
+                            <svg [ngClass]="{'iconsm': screenWidth <= 1024}" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-edit-circle">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z" />
@@ -138,19 +137,16 @@
                                 class="text-prim-light-2"></i-tabler> -->
                         </button>
                         <!-- (click)="saveRow(d)" *ngIf="i === rowEdit"  -->
-                        <button 
-                        class="w-7 h-7 
-                            lg:w-9 lg:h-9 
-                            mx-2 rounded-full bg-secondary flex justify-center items-center
+                        <button class="size-6 
+                            lg:size-8
+                            rounded-full bg-secondary-500 flex justify-center items-center
                             transition ease-in-out delaxy-75 
-                            hover:shadow-md hover:shadow-prim-dark-1/70 hover:-translate-y-0.5" aria-label="save-item">
-                            
-                            <svg 
-                            class="text-primary-200"
-                            [ngClass]="{'iconsm': screenWidth <= 1024}"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
+                            hover:shadow-md hover:hover:shadow-primary-900/70 hover:-translate-y-0.5"
+                            aria-label="save-item">
+
+                            <svg [ngClass]="{'iconsm': screenWidth <= 1024}" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
@@ -159,20 +155,29 @@
                             </svg>
 
 
-                            <i-tabler name="device-floppy" [ngClass]="{'iconsm': screenWidth <= 1024}"
-                                class="text-prim-light-2"></i-tabler>
+                            <!-- <i-tabler name="device-floppy" [ngClass]="{'iconsm': screenWidth <= 1024}"
+                                class="text-prim-light-2"></i-tabler> -->
                         </button>
 
                         <!-- (click)="deleteRow( i, d.id )"  -->
-                        <button 
-                        class="w-7 h-7 
-                            lg:w-9 lg:h-9 mr-1 
+                        <button class="size-6 
+                            lg:size-8
                             rounded-full bg-danger flex justify-center items-center 
                             transition ease-in-out delaxy-75 
-                            hover:shadow-md hover:shadow-prim-dark-1/70 hover:-translate-y-0.5"
+                            hover:shadow-md hover:hover:shadow-primary-900/70 hover:-translate-y-0.5"
                             aria-label="delete-item">
-                            <i-tabler name="trash" [ngClass]="{'iconsm': screenWidth <= 1024}"
-                                class="text-prim-light-2"></i-tabler>
+
+                            <svg [ngClass]="{'iconsm': screenWidth <= 1024}" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 7l16 0" />
+                                <path d="M10 11l0 6" />
+                                <path d="M14 11l0 6" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
                         </button>
                     </td>
                 </tr>
@@ -183,13 +188,65 @@
         </table>
     </div>
 
+
+    <div class="w-full h-3/12 flex justify-center items-center  text-sm lg:text-lg">
+        <div class="w-3/6 h-16  flex items-center justify-center gap-x-2">
+            <!-- (click)="prevPage()" [disabled]=" currentPage() == 1"
+            [ngClass]="{'disabled:bg-primary-700-1/20': currentPage() == 1}" -->
+            <button
+                class="size-9 bg-primary-300/50  hover:bg-primary-300/90 rounded-full flex justify-center items-center"
+                aria-label="prev-pag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 6l-6 6l6 6" />
+                </svg>
+            </button>
+            <!-- [ngClass]="{'w-1/2': pages.length >= 5}" -->
+            <div class="flex justify-evenly gap-x-2">
+                <!-- [ngClass]="{'bg-prim-dark-1 text-prim-light-2': currentPage() === i + 1 }" -->
+                <span class="size-9 rounded-full bg-primary-900 flex justify-center items-center text-primary-50 font-bold">
+                    1
+                </span>
+                <span class="size-9  rounded-full flex justify-center items-center text-primary-950 font-bold">
+                    2
+                </span>
+                <!-- <ng-container *ngFor="let _ of pages; let i = index;">
+                    <span [ngClass]="{'bg-prim-dark-1 text-prim-light-2': currentPage() === i + 1 }"
+                        class="w-9 h-9 mx-2 rounded-full flex justify-center items-center text-prim-dark-1 font-bold">
+                        {{ i + 1 }}
+                    </span>
+
+                </ng-container> -->
+
+            </div>
+            <!-- (click)="nextPage()" [disabled]=" currentPage() === pages.length"
+                [ngClass]="{'disabled:bg-primary-700-1/20': currentPage() === pages.length}" -->
+            <button
+                class="size-9 bg-primary-300/50  hover:bg-primary-300/90 rounded-full flex justify-center items-center"
+                aria-label="next-pag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 6l6 6l-6 6" />
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+
+
+
     <!-- <ng-container *ngIf="productCount > 10">
 
         <div class="w-full h-3/12 flex justify-center items-center  text-sm lg:text-lg">
             <div class="w-3/6 h-16  flex items-center justify-center">
                 <button (click)="prevPage()" [disabled]=" currentPage() == 1"
-                    [ngClass]="{'disabled:bg-prim-light-1/20': currentPage() == 1}"
-                    class="w-9 h-9 bg-prim-light-1/50  hover:bg-prim-light-1/90 rounded-full flex justify-center items-center"
+                    [ngClass]="{'disabled:bg-primary-700-1/20': currentPage() == 1}"
+                    class="w-9 h-9 bg-primary-700-1/50  hover:bg-primary-700-1/90 rounded-full flex justify-center items-center"
                     aria-label="prev-pag">
                     <i-tabler name="chevron-left"></i-tabler>
                 </button>
@@ -206,8 +263,8 @@
 
                 </div>
                 <button (click)="nextPage()" [disabled]=" currentPage() === pages.length"
-                    [ngClass]="{'disabled:bg-prim-light-1/20': currentPage() === pages.length}"
-                    class="w-9 h-9 bg-prim-light-1/50 hover:bg-prim-light-1/90 rounded-full flex justify-center items-center"
+                    [ngClass]="{'disabled:bg-primary-700-1/20': currentPage() === pages.length}"
+                    class="w-9 h-9 bg-primary-700-1/50 hover:bg-primary-700-1/90 rounded-full flex justify-center items-center"
                     aria-label="next-pag">
                     <i-tabler name="chevron-right"></i-tabler>
                 </button>
